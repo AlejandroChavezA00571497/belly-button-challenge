@@ -67,22 +67,48 @@ function bubbleChart(subjectID){
             text : subjectData[0].otu_labels,
             mode : "markers",
             marker : {
-                size : subjectData.sample_values,
-                color : subjectData.otu_ids
+                color : subjectData[0].otu_ids,
+                size : subjectData[0].sample_values
             }
         }];
 
         let bubbleChartLayout = {
-            showlegend: false,
-            xaxis: {
-              title: {
-                text: 'OTU ID'
-            }},
+            title : "Bacteria",
+            showlegend : false,
             height: 600,
-            width: 800
+            width: 600
           };
 
         Plotly.newPlot("bubble", bubbleChartData, bubbleChartLayout)
     })
+};
+
+
+
+
+//Define function for the demographic information
+function demographicInfo(subjectID){
+    d3.json(url).then(function(jsonData){
+        let subjectData = jsonData.metadata.filter(x => x.id == subjectID);
+
+        const sampleMetadata = document.getElementById("sample-metadata");
+        sampleMetadata.innerHTML = `id: ${String(subjectData[0].id)} 
+        <br>ethnicity: ${subjectData[0].ethnicity}
+        <br>gender: ${subjectData[0].gender}
+        <br>age: ${subjectData[0].age}
+        <br>location: ${subjectData[0].location}
+        <br>bbtype: ${subjectData[0].bbtype}
+        <br>wfreq: ${subjectData[0].wfreq}`
+    })
+
+};
+
+
+//Define the optionChanged function present in the HTML, in order to actually change the visualizations according to the selected SubjectID
+
+function optionChanged(subjectID){
+    barChart(subjectID);
+    bubbleChart(subjectID);
+    demographicInfo(subjectID);
 };
 
