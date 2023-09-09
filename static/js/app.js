@@ -76,7 +76,7 @@ function bubbleChart(subjectID){
             title : "Bacteria",
             showlegend : false,
             height: 600,
-            width: 800
+            width: 900
           };
 
         Plotly.newPlot("bubble", bubbleChartData, bubbleChartLayout)
